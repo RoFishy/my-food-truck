@@ -11,7 +11,7 @@ local HudOpened = Signal.new()
 local HudClosed = Signal.new()
 
 -- // states
-local States = require(script.Parent.Parent.Utils.States)
+local States = require(script.Parent.Parent.Utils.State)
 local HUDToggle = States.HUDToggle
 local Time = States.Time
 
