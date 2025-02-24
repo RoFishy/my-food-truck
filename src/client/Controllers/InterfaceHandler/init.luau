@@ -1,25 +1,24 @@
--- // Services
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
+-- // obj
+local Scopes = require(script.Utils.Scopes)
+local States = require(script.Utils.States)
 
--- // Packages
-local Packages = ReplicatedStorage:WaitForChild("Packages")
-local Fusion = require(Packages.Fusion)
-
--- // Scopes
-local Scoped = Fusion.scoped
+local HUDToggle = States.HUDToggle
+local UIScope = Scopes.UIScope
 
 -- // Module
 local InterfaceHandler = {}
 
-InterfaceHandler.UIScope = Scoped(Fusion)
-InterfaceHandler.HUDScope = InterfaceHandler.UIScope:innerScope()
-
 function InterfaceHandler.Init()
-    
+
 end
 
 function InterfaceHandler.Start()
-
+    UIScope:HUD  {
+        scope = InterfaceHandler.UIScope
+    }
+    task.delay(5, function()
+        HUDToggle:set(true)
+    end)
 end
 
 return InterfaceHandler

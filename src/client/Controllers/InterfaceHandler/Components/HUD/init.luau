@@ -4,10 +4,16 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 -- // Packages
 local Packages = ReplicatedStorage:WaitForChild("Packages")
 local Fusion = require(Packages.Fusion)
+local Signal = require(Packages.Signal)
+
+-- // signal
+local HudOpened = Signal.new()
+local HudClosed = Signal.new()
 
 -- // states
-local States = require(script.Parent.Parent.States)
+local States = require(script.Parent.Parent.Utils.States)
 local HUDToggle = States.HUDToggle
+local Time = States.Time
 
 -- // Components
 local Button = require(script.Button)
@@ -33,86 +39,109 @@ local Buttons = {
 local function HUD(
     scope: Fusion.Scope
 )
-    local scope = scope:innerScope()
-    local bottomScope = scope:innerScope {
-        SquareButton = SquareButton
-    }
-    local leftScope = scope:innerScope {
-        CashBar = CashBar,
-        GemsBar = GemsBar
-    }
-    local topScope = scope:innerScope {
-        TimeLabel = TimeLabel,
-        LongButton = LongButton
-    }
-    scope:New "ScreenGui" {
-        [Fusion.Children] = {
-            bottomScope:New "Frame" { -- bottom hud buttons
-                Name = "BottomButtons",
-                Size = UDim2.new(0.543, 0,0.199, 0),
-                Position = bottomScope:Tween(bottomScope:Computed(function(use)
-                    if use(HUDToggle) == true then
-                        return UDim2.fromScale(0.496,1)
-                    else
-                        return UDim2.fromScale(0.496, 1.2)
-                    end
-                end)),
-                [Fusion.Children] = {
-                    bottomScope:New "UIAspectRatioConstraint" {
-                        AspectRatio = 6.777,
-                    },
-                    bottomScope:New "UIGridLayout" {
-                        CellPadding = UDim2.new(0.025, 0,0.173, 0),
-                        CellSize = UDim2.new(0.121, 0,0.827, 0)
-                    },
-                    bottomScope:ForPairs(Buttons, function(_, _, name, image)
-                        return bottomScope:SquareButton {
-                            Text = name,
-                            Image = image
-                        }
-                    end)
-                }
-            },
-            leftScope:New "Frame" { -- left side buttons
-                Name = "LeftHolder",
-                Size = UDim2.new(0.205, 0,0.252, 0),
-                Position = leftScope:Tween(leftScope:Computed(function(use)
-                    if use(HUDToggle) == true then
-                        return UDim2.fromScale(0, .5)
-                    else
-                        return UDim2.fromScale(-.25, .5)
-                    end
-                end)),
-                [Fusion.Children] = {
-                    leftScope:New "UIAspectRatioConstraint" {
-                        AspectRatio = 1.684
-                    },
-                    leftScope:CashBar {
-                        Cash = leftScope:Value("100,000")
-                    },
-                    leftScope:GemsBar {
-                        Gems = leftScope:Value("100,000")
+    local HudObserver = scope:Observer(HUDToggle)
+
+    HudObserver:OnChange(function()
+        if Fusion.peek(HUDToggle) == true then
+            HudOpened:Fire()
+        else
+            HudClosed:Fire()
+        end
+    end)
+
+    table.insert(scope, HudOpened:Connect(function()
+        local HudScope = scope:innerScope()
+        local bottomScope = HudScope:innerScope {
+            SquareButton = SquareButton
+        }
+        local leftScope = HudScope:innerScope {
+            CashBar = CashBar,
+            GemsBar = GemsBar
+        }
+        local topScope = HudScope:innerScope {
+            TimeLabel = TimeLabel,
+            LongButton = LongButton
+        }
+
+        local Info = TweenInfo.new(.2, Enum.EasingStyle.Linear, Enum.EasingDirection.In)
+
+        HudScope:New "ScreenGui" {
+            IgnoreGuilnset = true,
+            Name = "HUD",
+            [Fusion.Children] = {
+                bottomScope:New "Frame" { -- bottom hud buttons
+                    Name = "BottomButtons",
+                    Size = UDim2.new(0.543, 0,0.199, 0),
+                    Position = bottomScope:Tween(bottomScope:Computed(function(use)
+                        if use(HUDToggle) == true then
+                            return UDim2.fromScale(0.496,1)
+                        else
+                            return UDim2.fromScale(0.496, 1.2)
+                        end
+                    end), Info),
+                    [Fusion.Children] = {
+                        bottomScope:New "UIAspectRatioConstraint" {
+                            AspectRatio = 6.777,
+                        },
+                        bottomScope:New "UIGridLayout" {
+                            CellPadding = UDim2.new(0.025, 0,0.173, 0),
+                            CellSize = UDim2.new(0.121, 0,0.827, 0)
+                        },
+                        bottomScope:ForPairs(Buttons, function(_, _, name, image)
+                            return bottomScope:SquareButton {
+                                Text = name,
+                                Image = image
+                            }
+                        end)
                     }
+                },
+                leftScope:New "Frame" { -- left side buttons
+                    Name = "LeftHolder",
+                    Size = UDim2.new(0.205, 0,0.252, 0),
+                    Position = leftScope:Tween(leftScope:Computed(function(use)
+                        if use(HUDToggle) == true then
+                            return UDim2.fromScale(0, .5)
+                        else
+                            return UDim2.fromScale(-.25, .5)
+                        end
+                    end), Info),
+                    [Fusion.Children] = {
+                        leftScope:New "UIAspectRatioConstraint" {
+                            AspectRatio = 1.684
+                        },
+                        leftScope:CashBar {
+                            Cash = leftScope:Value("100,000")
+                        },
+                        leftScope:GemsBar {
+                            Gems = leftScope:Value("100,000")
+                        }
+                    }
+                },
+                topScope:New "Frame" { -- update button shit etc
+                    Name = "TopRightHolder",
+                    [Fusion.Children] = {
+                        
+                    }
+                },
+                topScope:TimeLabel {
+                    Time = Time,
+                    Position = topScope:Tween(topScope:Computed(function(use)
+                        if use(HUDToggle) == true then
+                            return UDim2.fromScale(.5, .04)
+                        else
+                            return UDim2.fromScale(-.12)
+                        end
+                    end), Info)
                 }
-            },
-            topScope:New "Frame" { -- update button shit etc
-                Name = "TopRightHolder",
-                [Fusion.Children] = {
-                    
-                }
-            },
-            topScope:TimeLabel {
-                Time = topScope:Value("10:00 AM"),
-                Position = topScope:Tween(topScope:Computed(function(use)
-                    if use(HUDToggle) == true then
-                        return UDim2.fromScale(.5, .04)
-                    else
-                        return UDim2.fromScale(-.12)
-                    end
-                end))
             }
         }
-    }
+
+        table.insert(HudScope, HudClosed:Connect(function()
+            task.delay(.25, function()
+                HudScope:doCleanup()
+            end)
+        end))
+    end))
 end
 
 return HUD
