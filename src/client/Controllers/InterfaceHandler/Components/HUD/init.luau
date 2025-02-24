@@ -10,11 +10,6 @@ local Signal = require(Packages.Signal)
 local HudOpened = Signal.new()
 local HudClosed = Signal.new()
 
--- // states
-local States = require(script.Parent.Parent.Utils.State)
-local HUDToggle = States.HUDToggle
-local Time = States.Time
-
 -- // Components
 local Button = require(script.Button)
 local LongButton = Button.LongButton
@@ -39,9 +34,13 @@ local Buttons = {
 local function HUD(
     scope: Fusion.Scope
 )
+    local States = require(script.Parent.Parent.Utils.States)
+    local HUDToggle = States.HUDToggle
+    local Time = States.Time
+
     local HudObserver = scope:Observer(HUDToggle)
 
-    HudObserver:OnChange(function()
+    HudObserver:onChange(function()
         if Fusion.peek(HUDToggle) == true then
             HudOpened:Fire()
         else
