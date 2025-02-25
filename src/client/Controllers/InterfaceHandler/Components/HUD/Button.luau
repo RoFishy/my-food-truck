@@ -15,16 +15,18 @@ function Button.SquareButton(
     scope: Fusion.Scope,
     props: {
         Text: UsedAs<string>,
-        Image: UsedAs<string>
+        Image: UsedAs<string>,
+        Name: UsedAs<string>
     }
 )
     local Hovering = scope:Value(false)
+    local MouseDown = scope:Value(false)
     return scope:New "ImageButton" {
-        Name = "inventory",
+        Name = props.Name,
         Active = false,
         AnchorPoint = Vector2.new(0.5, 0.5),
         BackgroundTransparency = 1,
-        Image = "rbxassetid://127394997710269",
+        Image = props.Image,
         LayoutOrder = 1,
         Position = UDim2.fromScale(0.5, .5),
         Size = UDim2.fromScale(0.121, 0.827),
@@ -59,11 +61,13 @@ function Button.SquareButton(
                 }
             },
             scope:New "UIScale" {
-                Scale = scope:Tween(scope:Computed(function(use)
+                Scale = scope:Tween(scope:Computed(function(use, _)
                     if use(Hovering) == false then
                         return 1
-                    else
+                    elseif use(MouseDown) == false then
                         return 1.25
+                    else
+                        return .75
                     end
                 end), TweenInfo.new(.25, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut))
             }
@@ -73,6 +77,12 @@ function Button.SquareButton(
         end,
         [Fusion.OnEvent "MouseLeave"] = function()
             Hovering:set(false)
+        end,
+        [Fusion.OnEvent "MouseButton1Down"] = function()
+           MouseDown:set(true) 
+        end,
+        [Fusion.OnEvent "MouseButton1Up"] = function()
+            MouseDown:set(false)
         end
     }
 end

@@ -110,7 +110,6 @@ function StatBars.Gems(
         Gems : Fusion.Value
     }
 )
-    local Hovering = scope:Value(false)
     return scope:New "ImageLabel" {
         Name = "gems",
         AnchorPoint = Vector2.new(0.5, 0.5),
@@ -118,14 +117,6 @@ function StatBars.Gems(
         Image = "rbxassetid://94200048909767",
         Position = UDim2.fromScale(0.497, 0.723),
         Size = UDim2.fromScale(0.873, 0.388),
-
-        [Fusion.OnEvent "MouseEnter"] = function()
-            Hovering:set(true)
-        end,
-
-        [Fusion.OnEvent "MouseLeave"] = function()
-            Hovering:set(false)
-        end,
     
         [Fusion.Children] = {
             scope:New "UIAspectRatioConstraint" {
@@ -186,16 +177,6 @@ function StatBars.Gems(
                         Thickness = 3.09,
                     },
                 }
-            },
-
-            scope:New "UIScale" {
-                Scale = scope:Tween(scope:Computed(function(use)
-                    if use(Hovering) == true then
-                        return 1.25
-                    else
-                        return 1
-                    end
-                end), TweenInfo.new(.25, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut))
             }
         }
     }

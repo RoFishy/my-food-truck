@@ -14,10 +14,12 @@ end
 
 function InterfaceHandler.Start()
     UIScope:HUD  {
-        scope = InterfaceHandler.UIScope
+        scope = UIScope
     }
-    task.delay(5, function()
+    print("did this shit correctly")
+    task.delay(3, function()
         HUDToggle:set(true)
+        print("just set this shit bro")
     end)
 end
 
