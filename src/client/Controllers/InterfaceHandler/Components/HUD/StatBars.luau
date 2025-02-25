@@ -14,6 +14,8 @@ function StatBars.Cash(
     }
 )
     local Hovering = scope:Value(false)
+    local MouseDown = scope:Value(false)
+
     return scope:New "ImageLabel" {
         Name = "cash",
         AnchorPoint = Vector2.new(0.5, 0.5),
@@ -22,13 +24,6 @@ function StatBars.Cash(
         Position = UDim2.fromScale(0.5, 0.259),
         Size = UDim2.fromScale(0.873, 0.388),
 
-        [Fusion.OnEvent "MouseEnter"] = function()
-            Hovering:set(true)
-        end,
-
-        [Fusion.OnEvent "MouseLeave"] = function()
-            Hovering:set(false)
-        end,
     
         [Fusion.Children] = {
             scope:New "UIAspectRatioConstraint" {
@@ -43,6 +38,8 @@ function StatBars.Cash(
                 Image = "rbxassetid://105110841369565",
                 Position = UDim2.fromScale(0.13, 0.5),
                 Size = UDim2.fromScale(0.174, 0.658),
+
+
         
                 [Fusion.Children] = {
                         scope:New "UIAspectRatioConstraint" {
@@ -59,12 +56,36 @@ function StatBars.Cash(
                 Image = "rbxassetid://132295849234813",
                 Position = UDim2.fromScale(0.876, 0.51),
                 Size = UDim2.fromScale(0.17, 0.684),
+
+                [Fusion.OnEvent "MouseButton1Down"] = function()
+                    MouseDown:set(true) 
+                end,
+                [Fusion.OnEvent "MouseButton1Up"] = function()
+                    MouseDown:set(false)
+                end,
+                [Fusion.OnEvent "MouseEnter"] = function()
+                    Hovering:set(true)
+                end,
+                [Fusion.OnEvent "MouseLeave"] = function()
+                    Hovering:set(false)
+                end,
         
                 [Fusion.Children] = {
                     scope:New "UIAspectRatioConstraint" {
                         Name = "UIAspectRatioConstraint",
                         AspectRatio = 0.942,
                     },
+                    scope:New "UIScale" {
+                        Scale = scope:Tween(scope:Computed(function(use, _)
+                            if use(Hovering) == false then
+                                return 1
+                            elseif use(MouseDown) == false then
+                                return 1.25
+                            else
+                                return .75
+                            end
+                        end), TweenInfo.new(.25, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut))
+                    }
                 }
             },
     
@@ -90,16 +111,6 @@ function StatBars.Cash(
                     },
                 }
             },
-
-            scope:New "UIScale" {
-                Scale = scope:Tween(scope:Computed(function(use)
-                    if use(Hovering) == true then
-                        return 1.25
-                    else
-                        return 1
-                    end
-                end), TweenInfo.new(.25, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut))
-            }
         }
     }
 end
@@ -110,6 +121,9 @@ function StatBars.Gems(
         Gems : Fusion.Value
     }
 )
+    local Hovering = scope:Value(false)
+    local MouseDown = scope:Value(false)
+
     return scope:New "ImageLabel" {
         Name = "gems",
         AnchorPoint = Vector2.new(0.5, 0.5),
@@ -133,9 +147,9 @@ function StatBars.Gems(
                 Size = UDim2.fromScale(0.174, 0.658),
         
                 [Fusion.Children] = {
-                scope:New "UIAspectRatioConstraint" {
-                    Name = "UIAspectRatioConstraint",
-                },
+                    scope:New "UIAspectRatioConstraint" {
+                        Name = "UIAspectRatioConstraint",
+                    },
                 }
             },
         
@@ -147,12 +161,36 @@ function StatBars.Gems(
                 Image = "rbxassetid://132295849234813",
                 Position = UDim2.fromScale(0.876, 0.51),
                 Size = UDim2.fromScale(0.17, 0.684),
+
+                [Fusion.OnEvent "MouseEnter"] = function()
+                    Hovering:set(true)
+                end,
+                [Fusion.OnEvent "MouseLeave"] = function()
+                    Hovering:set(false)
+                end,
+                [Fusion.OnEvent "MouseButton1Down"] = function()
+                   MouseDown:set(true) 
+                end,
+                [Fusion.OnEvent "MouseButton1Up"] = function()
+                    MouseDown:set(false)
+                end,
         
                 [Fusion.Children] = {
                     scope:New "UIAspectRatioConstraint" {
                         Name = "UIAspectRatioConstraint",
                         AspectRatio = 0.942,
                     },
+                    scope:New "UIScale" {
+                        Scale = scope:Tween(scope:Computed(function(use, _)
+                            if use(Hovering) == false then
+                                return 1
+                            elseif use(MouseDown) == false then
+                                return 1.25
+                            else
+                                return .75
+                            end
+                        end), TweenInfo.new(.25, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut))
+                    }
                 }
             },
         

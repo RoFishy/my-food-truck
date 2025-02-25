@@ -5,6 +5,10 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Packages = ReplicatedStorage:WaitForChild("Packages")
 local Fusion = require(Packages.Fusion)
 
+-- // Utils
+local Utils = script.Parent.Parent.Parent.Utils
+local States = require(Utils.States)
+
 -- // types
 type UsedAs<T> = Fusion.UsedAs<T>
 

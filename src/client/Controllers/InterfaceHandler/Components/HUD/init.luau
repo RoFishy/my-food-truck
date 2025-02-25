@@ -81,7 +81,7 @@ local function HUD(
                         VerticalAlignment = "Center",
                         FillDirection = "Horizontal",
                         Padding = UDim.new(.025, 0),
-                        LayoutOrder = "Name"
+                        SortOrder = "Name"
                     },
                     bottomScope:ForPairs(Buttons, function(_, _, name, table)
                         return name, bottomScope:SquareButton {
