@@ -5,6 +5,12 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Packages = ReplicatedStorage:WaitForChild("Packages")
 local Fusion = require(Packages.Fusion)
 
+-- // Utils
+local Utils = script.Parent.Parent.Utils
+
+local Events = require(Utils.Events)
+local ToggleHUD = Events.ToggleHUD
+
 -- // Components
 local Button = require(script.Button)
 local LongButton = Button.LongButton
@@ -29,11 +35,13 @@ local Buttons = {
 local function HUD(
     scope: Fusion.Scope
 )
-    local States = require(script.Parent.Parent.Utils.States)
-    local HUDToggle = States.HUDToggle
-    local Time = States.Time
-
     local HudScope = scope:innerScope()
+
+    -- // states
+    local HUDToggle = HudScope:Value(true)
+    local Time = HudScope:Value("10:00 AM")
+
+    -- // scopes
     local bottomScope = HudScope:innerScope {
         SquareButton = SquareButton
     }
@@ -45,6 +53,15 @@ local function HUD(
         TimeLabel = TimeLabel,
         LongButton = LongButton
     }
+
+    -- // events
+    ToggleHUD:Connect(function()
+        if Fusion.peek(HUDToggle) == true then
+            HUDToggle:set(false)
+        else
+            HUDToggle:set(true)
+        end
+    end)
 
     local Info = TweenInfo.new(.2, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut)
     return HudScope:New "ScreenGui" {
