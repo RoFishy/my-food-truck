@@ -30,7 +30,10 @@ local function Close(
                 Name = "UIAspectRatioConstraint",
                 AspectRatio = 0.961,
             },
-        }
+        },
+        OnClick = function()
+
+        end
     })
 end
 

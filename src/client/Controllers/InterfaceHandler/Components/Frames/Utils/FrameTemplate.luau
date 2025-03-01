@@ -16,7 +16,7 @@ local function FrameTemplate(
         Image : UsedAs<string>,
         
         Children : {},
-        OuterChildren : {}
+        OuterChildren : {}?
     }
 )
 
