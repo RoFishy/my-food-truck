@@ -5,10 +5,6 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Packages = ReplicatedStorage:WaitForChild("Packages")
 local Fusion = require(Packages.Fusion)
 
--- // Utils
-local Utils = script.Parent.Parent.Parent.Utils
-local States = require(Utils.States)
-
 -- // types
 type UsedAs<T> = Fusion.UsedAs<T>
 
@@ -23,6 +19,12 @@ function Button.SquareButton(
         Name: UsedAs<string>
     }
 )
+
+    -- // Utils
+    local Utils = script.Parent.Parent.Parent.Utils
+    local States = require(Utils.States)
+    local CurrentFrame = States.CurrentFrame
+
     local Hovering = scope:Value(false)
     local MouseDown = scope:Value(false)
     return scope:New "ImageButton" {
@@ -76,6 +78,10 @@ function Button.SquareButton(
                 end), TweenInfo.new(.25, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut))
             }
         },
+        [Fusion.OnEvent "MouseButton1Click"] = function()
+            CurrentFrame:set(props.Text)
+            print(Fusion.peek(CurrentFrame))
+        end,
         [Fusion.OnEvent "MouseEnter"] = function()
             Hovering:set(true)
         end,
@@ -83,7 +89,7 @@ function Button.SquareButton(
             Hovering:set(false)
         end,
         [Fusion.OnEvent "MouseButton1Down"] = function()
-           MouseDown:set(true) 
+           MouseDown:set(true)
         end,
         [Fusion.OnEvent "MouseButton1Up"] = function()
             MouseDown:set(false)

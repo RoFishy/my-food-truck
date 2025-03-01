@@ -79,7 +79,7 @@ function StatBars.Cash(
                         Scale = scope:Tween(scope:Computed(function(use, _)
                             if use(Hovering) == false then
                                 return 1
-                            elseif use(MouseDown) == false then
+                            elseif use(MouseDown) == false and use(Hovering) == true then
                                 return 1.25
                             else
                                 return .75
@@ -184,7 +184,7 @@ function StatBars.Gems(
                         Scale = scope:Tween(scope:Computed(function(use, _)
                             if use(Hovering) == false then
                                 return 1
-                            elseif use(MouseDown) == false then
+                            elseif use(MouseDown) == false and use(Hovering) == true then
                                 return 1.25
                             else
                                 return .75

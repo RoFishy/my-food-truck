@@ -1,9 +1,19 @@
--- // obj
-local Scopes = require(script.Utils.Scopes)
-local States = require(script.Utils.States)
+-- // Services
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-local HUDToggle = States.HUDToggle
-local UIScope = Scopes.UIScope
+-- // Packages
+local Packages = ReplicatedStorage:WaitForChild("Packages")
+local Fusion = require(Packages.Fusion)
+
+-- // Components
+local Components = script.Components
+local HUD = require(Components.HUD)
+
+-- // Scopes
+local Scoped = Fusion.scoped
+local UIScope = Scoped(Fusion, {
+    HUD = HUD
+})
 
 -- // Module
 local InterfaceHandler = {}
@@ -16,11 +26,6 @@ function InterfaceHandler.Start()
     UIScope:HUD  {
         scope = UIScope
     }
-    print("did this shit correctly")
-    task.delay(3, function()
-        HUDToggle:set(true)
-        print("just set this shit bro")
-    end)
 end
 
 return InterfaceHandler
