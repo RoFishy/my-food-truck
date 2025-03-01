@@ -17,7 +17,7 @@ local function ButtonTemplate(
         Image: UsedAs<string>,
         Size: UsedAs<UDim2>,
 
-        Children : {},
+        [typeof(Fusion.Child)]: Fusion.Child?,
         OnClick : () -> ()
     }
 )
@@ -44,7 +44,7 @@ local function ButtonTemplate(
                     end
                 end), TweenInfo.new(.25, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut))
             },
-            props.Children
+            props[Fusion.Children]
         },
         [Fusion.OnEvent "MouseButton1Click"] = props.OnClick,
 

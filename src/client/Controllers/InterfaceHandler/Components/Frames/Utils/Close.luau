@@ -25,7 +25,7 @@ local function Close(
         Position = props.Position,
         Size = UDim2.fromScale(0.959, 0.214),
 
-        Children = {
+        [Fusion.Children] = {
             scope:New "UIAspectRatioConstraint" {
                 Name = "UIAspectRatioConstraint",
                 AspectRatio = 0.961,

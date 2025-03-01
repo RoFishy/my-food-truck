@@ -50,7 +50,7 @@ local function Daily(
         Name = "Daily",
         Size = UDim2.fromScale(0.532, 0.442),
         Image = "rbxassetid://140633822201266",
-        Children = {
+        [Fusion.Children] = {
             Close(scope, {
                 Position = UDim2.fromScale(0.925, 0.162)
             }),
@@ -62,7 +62,7 @@ local function Daily(
                 Name = "Claim",
                 Image = "rbxassetid://1109801309",
                 Size = UDim2.fromScale(0.262, 0.21),
-                Children = {
+                [Fusion.Children] = {
                     scope:New "UIAspectRatioConstraint" {
                         AspectRatio = 2.68
                     }
@@ -97,7 +97,7 @@ local function Daily(
                                 return
                             end,
 
-                            Children = {
+                            [Fusion.Children] = {
                                 scope:New "UIAspectRatioConstraint" {
                                     AspectRatio = 0.769
                                 },

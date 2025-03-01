@@ -15,7 +15,7 @@ local function FrameTemplate(
         Size: UsedAs<UDim2>,
         Image : UsedAs<string>,
         
-        Children : {},
+        [typeof(Fusion.Child)]: Fusion.Child?,
         OuterChildren : {}?
     }
 )
