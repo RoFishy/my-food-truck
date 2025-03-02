@@ -5,6 +5,10 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Packages = ReplicatedStorage:WaitForChild("Packages")
 local Fusion = require(Packages.Fusion)
 
+-- // HudUtils
+local HudUtils = script.Utils
+local FormatNumber = require(HudUtils.FormatNumber)
+
 -- // Utils
 local Utils = script.Parent.Parent.Utils
 
@@ -41,6 +45,8 @@ local function HUD(
     -- // states
     local HUDToggle = HudScope:Value(true)
     local Time = HudScope:Value("10:00 AM")
+    local Cash = HudScope:Value("10,000")
+    local Gems = HudScope:Value("10,000")
 
     -- // scopes
     local bottomScope = HudScope:innerScope {
@@ -128,10 +134,10 @@ local function HUD(
                         AspectRatio = 1.684
                     },
                     leftScope:CashBar {
-                        Cash = leftScope:Value("100,000")
+                        Cash = Cash
                     },
                     leftScope:GemsBar {
-                        Gems = leftScope:Value("100,000")
+                        Gems = Gems
                     }
                 }
             },
