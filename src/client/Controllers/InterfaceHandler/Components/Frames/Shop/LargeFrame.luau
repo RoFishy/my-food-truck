@@ -14,15 +14,22 @@ local ButtonTemplate = require(Utils.ButtonTemplate)
 local FrameTemplate = require(Utils.FrameTemplate)
 local Close = require(Utils.Close)
 
-local function Deals(
+local function LargeFrame(
     scope: Fusion.Scope,
     props: {
-        Position : UsedAs<UDim2>,
-        Parent : UsedAs<Instance>
+        Tag: UsedAs<string>,
+        BackgroundImage: UsedAs<string>,
+
+        -- Text
+        TextColor : UsedAs<Color3>,
+        TextStrokeColor : UsedAs<Color3>,
+
+        -- Pricing
+        Price: UsedAs<number>,
+        
     }
 )
-    -- look at this one later -- since it has stuff outside of the actual frame image,  gonna have to structure it differnetly
     
 end
 
-return Deals
+return LargeFrame

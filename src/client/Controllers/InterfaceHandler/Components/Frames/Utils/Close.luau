@@ -20,7 +20,9 @@ local function Close(
     scope: Fusion.Scope,
     props:{
         Position : UsedAs<UDim2>,
-        Frame : UsedAs<string>
+        Frame : UsedAs<string>,
+        Size : UsedAs<UDim2>,
+        AspectRatio : UsedAs<number>?
     }
 )
 
@@ -28,12 +30,12 @@ local function Close(
         Name = "Close",
         Image = "rbxassetid://135109674433249",
         Position = props.Position,
-        Size = UDim2.fromScale(0.959, 0.214),
+        Size = props.Size,
 
         [Fusion.Children] = {
             scope:New "UIAspectRatioConstraint" {
                 Name = "UIAspectRatioConstraint",
-                AspectRatio = 0.961,
+                AspectRatio = props.AspectRatio or 0.961,
             },
         },
         OnClick = function()
