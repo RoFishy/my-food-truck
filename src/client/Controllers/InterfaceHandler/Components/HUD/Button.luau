@@ -20,7 +20,8 @@ function Button.SquareButton(
     props: {
         Text: UsedAs<string>,
         Image: UsedAs<string>,
-        Name: UsedAs<string>
+        Name: UsedAs<string>,
+        Frame : UsedAs<string>,
     }
 )
     local Hovering = scope:Value(false)
@@ -78,7 +79,7 @@ function Button.SquareButton(
         },
         [Fusion.OnEvent "MouseButton1Click"] = function()
             Events.ToggleHUD:Fire()
-            Events.ToggleFrame:Fire(props.Name)
+            Events.ToggleFrame:Fire(props.Frame)
         end,
         [Fusion.OnEvent "MouseEnter"] = function()
             Hovering:set(true)

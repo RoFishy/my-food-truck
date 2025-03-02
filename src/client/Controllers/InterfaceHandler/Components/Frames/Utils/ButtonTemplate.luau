@@ -16,6 +16,7 @@ local function ButtonTemplate(
         Name: UsedAs<string>?,
         Image: UsedAs<string>,
         Size: UsedAs<UDim2>,
+        ZIndex: UsedAs<number>?,
 
         [typeof(Fusion.Child)]: Fusion.Child?,
         OnClick : () -> ()
@@ -31,6 +32,7 @@ local function ButtonTemplate(
         Image = props.Image,
         Position = props.Position,
         Size = props.Size,
+        ZIndex = props.ZIndex or 1,
 
         [Fusion.Children] = {
             scope:New "UIScale" {
@@ -38,7 +40,7 @@ local function ButtonTemplate(
                     if use(Hovering) == false then
                         return 1
                     elseif use(MouseDown) == false then
-                        return 1.25
+                        return 1.15
                     else
                         return .75
                     end

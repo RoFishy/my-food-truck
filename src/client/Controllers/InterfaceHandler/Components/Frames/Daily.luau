@@ -5,8 +5,11 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Packages = ReplicatedStorage:WaitForChild("Packages")
 local Fusion = require(Packages.Fusion)
 
+-- // Types
+type UsedAs<T> = Fusion.UsedAs<T>
+
 -- // Components/Utils
-local Utils = script.Parent
+local Utils = script.Parent.Utils
 local ButtonTemplate = require(Utils.ButtonTemplate)
 local FrameTemplate = require(Utils.FrameTemplate)
 local Close = require(Utils.Close)
@@ -18,51 +21,51 @@ local Rewards = {
         Image = "rbxassetid://122720055977995"
     },
     ["Day 2"] = {
-        Reward = "250",
+        Reward = "250x Burger",
         Image = "rbxassetid://122720055977995"
     },
     ["Day 3"] = {
-        Reward = "250",
+        Reward = "250x Burger",
         Image = "rbxassetid://122720055977995"
     },
     ["Day 4"] = {
-        Reward = "250",
+        Reward = "250x Burger",
         Image = "rbxassetid://122720055977995"
     },
     ["Day 5"] = {
-        Reward = "250",
-        Image = "rbxassetid://122720055977995"
-    },
-    ["Day 6"] = {
-        Reward = "250",
-        Image = "rbxassetid://122720055977995"
-    },
-    ["Day 7"] = {
-        Reward = "250",
+        Reward = "250x Burger",
         Image = "rbxassetid://122720055977995"
     }
 }
 
 local function Daily(
-    scope: Fusion.Scope
+    scope: Fusion.Scope,
+    props: {
+        Position: UsedAs<UDim2>,
+        Parent: UsedAs<Instance>
+    }
 )
     return FrameTemplate(scope, {
         Name = "Daily",
         Size = UDim2.fromScale(0.532, 0.442),
         Image = "rbxassetid://140633822201266",
+        Position = props.Position,
+        Parent = props.Parent,
         [Fusion.Children] = {
             Close(scope, {
                 Position = UDim2.fromScale(0.925, 0.162),
-                Frame = "Daily"
+                Frame = "Daily",
+                Size = UDim2.fromScale(0.959, 0.214)
             }),
             scope:New "UIAspectRatioConstraint" {
-                AspectRatio = 0.961
+                AspectRatio = 2.143
             },
             ButtonTemplate(scope, {
                 Position = UDim2.fromScale(0.5, 0.988),
                 Name = "Claim",
-                Image = "rbxassetid://1109801309",
+                Image = "rbxassetid://110980130953993",
                 Size = UDim2.fromScale(0.262, 0.21),
+                ZIndex = 2,
                 [Fusion.Children] = {
                     scope:New "UIAspectRatioConstraint" {
                         AspectRatio = 2.68
@@ -85,10 +88,11 @@ local function Daily(
                     scope:New "UIListLayout" {
                         FillDirection = "Horizontal",
                         SortOrder = "Name",
-                        Padding = UDim.new(0.014, 0)
+                        Padding = UDim.new(0.014, 0),
+                        HorizontalAlignment = "Center",
                     },
                     scope:ForPairs(Rewards, function(_, _, day, table)
-                        return day, ButtonTemplate(scope, {
+                        return day, scope:New "ImageLabel" {
                             Name = day,
                             Size = UDim2.fromScale(0.187, 0.975),
                             Image = "rbxassetid://88831126214608",
@@ -107,6 +111,7 @@ local function Daily(
                                     Size = UDim2.fromScale(0.661, 0.509),
                                     AnchorPoint = Vector2.new(0.5, 0.5),
                                     Position = UDim2.fromScale(0.5, 0.5),
+                                    BackgroundTransparency = 1,
                                     [Fusion.Children] = {
                                         scope:New "UIAspectRatioConstraint" {
                                             AspectRatio = 1
@@ -119,7 +124,7 @@ local function Daily(
                                     AnchorPoint = Vector2.new(.5, 1),
                                     Size = UDim2.fromScale(0.803, 0.275),
                                     FontFace = Font.new("rbxasset://fonts/families/FredokaOne.json"),
-                                    TextColor = Color3.fromRGB(4, 44, 80),
+                                    TextColor3 = Color3.fromRGB(4, 44, 80),
                                     Text = table.Reward,
                                     TextScaled = true,
                                     BackgroundTransparency = 1,
@@ -151,7 +156,7 @@ local function Daily(
                                     }
                                 }
                             }
-                        })
+                        }
                     end)
                 }
             }

@@ -23,14 +23,14 @@ local CashBar = StatBars.Cash
 local GemsBar = StatBars.Gems
 
 local Buttons = {
-    Shop = {"rbxassetid://78411123006556", "A"},
-    Inventory = {"rbxassetid://128673452431078", "B"},
-    Daily = {"rbxassetid://72848940883301", "C"},
-    Rewards = {"rbxassetid://139460988446220", "D"},
-    ["Lucky Spin"] = {"rbxassetid://134420521519287", "E"},
-    Stats = {"rbxassetid://127394997710269", "F"},
-    Quests = {"rbxassetid://125549102047405", "G"},
-    Settings=  {"rbxassetid://75973952885907", "H"},
+    Shop = {"rbxassetid://78411123006556", "A", "Shop"},
+    Inventory = {"rbxassetid://128673452431078", "B", "Inventory"},
+    Daily = {"rbxassetid://72848940883301", "C", "Daily"},
+    Rewards = {"rbxassetid://139460988446220", "D", "Rewards"},
+    ["Lucky Spin"] = {"rbxassetid://134420521519287", "E", "Wheel"},
+    Stats = {"rbxassetid://127394997710269", "F", "Stats"},
+    Quests = {"rbxassetid://125549102047405", "G", "Quests"},
+    Settings=  {"rbxassetid://75973952885907", "H", "Settings"},
 }
 
 local function HUD(
@@ -105,7 +105,8 @@ local function HUD(
                         return name, bottomScope:SquareButton {
                             Text = name,
                             Image = table[1],
-                            Name = table[2] 
+                            Name = table[2],
+                            Frame = table[3]
                         }
                     end)
                 }

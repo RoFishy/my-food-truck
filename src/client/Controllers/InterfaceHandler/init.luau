@@ -8,6 +8,7 @@ local Fusion = require(Packages.Fusion)
 -- // Components
 local Components = script.Components
 local HUD = require(Components.HUD)
+local Frames = require(Components.Frames)
 
 -- // Scopes
 local Scoped = Fusion.scoped
@@ -19,13 +20,14 @@ local UIScope = Scoped(Fusion, {
 local InterfaceHandler = {}
 
 function InterfaceHandler.Init()
-
-end
-
-function InterfaceHandler.Start()
     UIScope:HUD  {
         scope = UIScope
     }
+    Frames:Init()
+end
+
+function InterfaceHandler.Start()
+
 end
 
 return InterfaceHandler
