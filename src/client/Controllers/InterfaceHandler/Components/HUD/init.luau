@@ -25,11 +25,12 @@ local GemsBar = StatBars.Gems
 local Buttons = {
     Shop = {"rbxassetid://78411123006556", "A"},
     Inventory = {"rbxassetid://128673452431078", "B"},
-    Player = {"rbxassetid://131279536375883", "C"},
+    Daily = {"rbxassetid://72848940883301", "C"},
     Rewards = {"rbxassetid://139460988446220", "D"},
     ["Lucky Spin"] = {"rbxassetid://134420521519287", "E"},
     Stats = {"rbxassetid://127394997710269", "F"},
-    Quests = {"rbxassetid://125549102047405", "G"}
+    Quests = {"rbxassetid://125549102047405", "G"},
+    Settings=  {"rbxassetid://75973952885907", "H"},
 }
 
 local function HUD(
@@ -77,7 +78,7 @@ local function HUD(
                 Position = bottomScope:Tween(
                     bottomScope:Computed(function(use, _)
                         if use(HUDToggle) == true then
-                            return UDim2.fromScale(0.496,1)
+                            return UDim2.fromScale(0.496,0.975)
                         else
                             return UDim2.fromScale(0.496, 1.2)
                         end

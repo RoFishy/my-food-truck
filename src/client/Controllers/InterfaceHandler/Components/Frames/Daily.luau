@@ -52,7 +52,8 @@ local function Daily(
         Image = "rbxassetid://140633822201266",
         [Fusion.Children] = {
             Close(scope, {
-                Position = UDim2.fromScale(0.925, 0.162)
+                Position = UDim2.fromScale(0.925, 0.162),
+                Frame = "Daily"
             }),
             scope:New "UIAspectRatioConstraint" {
                 AspectRatio = 0.961

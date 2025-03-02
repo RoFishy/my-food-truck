@@ -9,13 +9,18 @@ local Fusion = require(Packages.Fusion)
 local Utils = script.Parent
 local ButtonTemplate = require(Utils.ButtonTemplate)
 
+-- // Global Utils
+local GlobalUtils = script.Parent.Parent.Parent.Parent.Utils
+local Events = require(GlobalUtils.Events)
+
 -- // types
 type UsedAs<T> = Fusion.UsedAs<T>
 
 local function Close(
     scope: Fusion.Scope,
     props:{
-        Position : UsedAs<UDim2>
+        Position : UsedAs<UDim2>,
+        Frame : UsedAs<string>
     }
 )
 
@@ -32,7 +37,8 @@ local function Close(
             },
         },
         OnClick = function()
-
+            Events.ToggleHUD:Fire()
+            Events.ToggleFrame:Fire(props.Frame)
         end
     })
 end

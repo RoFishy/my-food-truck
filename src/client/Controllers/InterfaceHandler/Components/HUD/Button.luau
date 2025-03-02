@@ -5,6 +5,10 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Packages = ReplicatedStorage:WaitForChild("Packages")
 local Fusion = require(Packages.Fusion)
 
+-- // Utils
+local Utils = script.Parent.Parent.Parent.Utils
+local Events = require(Utils.Events)
+
 -- // types
 type UsedAs<T> = Fusion.UsedAs<T>
 
@@ -19,12 +23,6 @@ function Button.SquareButton(
         Name: UsedAs<string>
     }
 )
-
-    -- // Utils
-    local Utils = script.Parent.Parent.Parent.Utils
-    local States = require(Utils.States)
-    local CurrentFrame = States.CurrentFrame
-
     local Hovering = scope:Value(false)
     local MouseDown = scope:Value(false)
     return scope:New "ImageButton" {
@@ -79,8 +77,8 @@ function Button.SquareButton(
             }
         },
         [Fusion.OnEvent "MouseButton1Click"] = function()
-            CurrentFrame:set(props.Text)
-            print(Fusion.peek(CurrentFrame))
+            Events.ToggleHUD:Fire()
+            Events.ToggleFrame:Fire(props.Name)
         end,
         [Fusion.OnEvent "MouseEnter"] = function()
             Hovering:set(true)
