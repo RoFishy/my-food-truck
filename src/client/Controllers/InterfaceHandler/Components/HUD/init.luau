@@ -143,6 +143,26 @@ local function HUD(
             },
             topScope:New "Frame" { -- update button shit etc
                 Name = "TopRightHolder",
+                AnchorPoint = Vector2.new(1, 0),
+                BackgroundTransparency = 1,
+                Size = UDim2.fromScale(0.205, 0.215),
+                Position = topScope:Tween(topScope:Computed(function(use, _) 
+                    if use(HUDToggle) == true then 
+                        return UDim2.fromScale(0.862, 0.039)
+                    else
+                        return UDim2.fromScale(0.862, -.2)
+                    end
+                end), Info),
+                [Fusion.Children] = {
+                    topScope:New "UIAspectRatioConstraint" {
+                        AspectRatio = 1.618
+                    },
+                    LongButton(topScope, {
+                        Text = "Updates",
+                        Image = "rbxassetid://82254931331147",
+                        Frame = "Updates"
+                    })
+                },
             },
             topScope:TimeLabel {
                 Time = Time,
