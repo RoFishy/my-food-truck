@@ -10,7 +10,6 @@ type UsedAs<T> = Fusion.UsedAs<T>
 
 -- // Components/Utils
 local Utils = script.Parent.Utils
-local ButtonTemplate = require(Utils.ButtonTemplate)
 local FrameTemplate = require(Utils.FrameTemplate)
 local Close = require(Utils.Close)
 

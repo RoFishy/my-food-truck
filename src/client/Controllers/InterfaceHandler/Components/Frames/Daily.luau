@@ -98,10 +98,6 @@ local function Daily(
                             Image = "rbxassetid://88831126214608",
                             Position = UDim2.fromScale(0, 0),
 
-                            OnClick = function()
-                                return
-                            end,
-
                             [Fusion.Children] = {
                                 scope:New "UIAspectRatioConstraint" {
                                     AspectRatio = 0.769

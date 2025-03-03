@@ -100,11 +100,15 @@ function Button.LongButton(
     scope: Fusion.Scope,
     props: {
         Text: UsedAs<string>,
-        Image: UsedAs<string>
+        Image: UsedAs<string>,
+        Frame: UsedAs<string>
     }
 )
-    scope:New "ImageLabel" {
-        Name = "updates",
+    local Hovering = scope:Value(false)
+    local MouseDown = scope:Value(false)
+
+    return scope:New "ImageButton" {
+        Name = props.Frame,
         AnchorPoint = Vector2.new(0.5, 0.5),
         BackgroundTransparency = 1,
         Image = "rbxassetid://90248858322706",
@@ -112,50 +116,77 @@ function Button.LongButton(
         Size = UDim2.fromScale(0.932, 0.398),
       
         [Fusion.Children] = {
-          scope:New "UIAspectRatioConstraint" {
-            Name = "UIAspectRatioConstraint",
-            AspectRatio = 3.79,
-          },
-      
-          scope:New "ImageLabel" {
-            Name = "Icon",
-            AnchorPoint = Vector2.new(0.5, 0.5),
-            BackgroundTransparency = 1,
-            Image = props.Image,
-            Position = UDim2.fromScale(0.289, 0.5),
-            Size = UDim2.fromScale(0.156, 0.645),
-      
-            [Fusion.Children] = {
-              scope:New "UIAspectRatioConstraint" {
+            scope:New "UIAspectRatioConstraint" {
                 Name = "UIAspectRatioConstraint",
-                AspectRatio = 0.918,
-              },
-            }
-          },
+                AspectRatio = 3.79,
+            },
       
-          Fusion.New "TextLabel" {
-            Name = "TextLabel",
-            BackgroundColor3 = Color3.fromRGB(255, 255, 255),
-            BackgroundTransparency = 1,
-            BorderColor3 = Color3.fromRGB(0, 0, 0),
-            BorderSizePixel = 0,
-            FontFace = Font.new("rbxasset://fonts/families/FredokaOne.json"),
-            Position = UDim2.fromScale(0.407, 0.244),
-            Size = UDim2.fromScale(0.479, 0.5),
-            Text = props.Text,
-            TextColor3 = Color3.fromRGB(255, 255, 255),
-            TextScaled = true,
-            TextWrapped = true,
+            scope:New "ImageLabel" {
+                Name = "Icon",
+                AnchorPoint = Vector2.new(0.5, 0.5),
+                BackgroundTransparency = 1,
+                Image = props.Image,
+                Position = UDim2.fromScale(0.256, 0.5),
+                Size = UDim2.fromScale(0.156, 0.645),
+        
+                [Fusion.Children] = {
+                scope:New "UIAspectRatioConstraint" {
+                    Name = "UIAspectRatioConstraint",
+                    AspectRatio = 0.918,
+                },
+                }
+            },
       
-            [Fusion.Children] = {
-              scope:New "UIStroke" {
-                Name = "UIStroke",
-                Color = Color3.fromRGB(4, 45, 80),
-                Thickness = 2.81,
-              },
+            scope:New "TextLabel" {
+                Name = "TextLabel",
+                BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+                BackgroundTransparency = 1,
+                BorderColor3 = Color3.fromRGB(0, 0, 0),
+                BorderSizePixel = 0,
+                FontFace = Font.new("rbxasset://fonts/families/FredokaOne.json"),
+                Position = UDim2.fromScale(0.379, 0.244),
+                Size = UDim2.fromScale(0.479, 0.5),
+                Text = props.Text,
+                TextColor3 = Color3.fromRGB(255, 255, 255),
+                TextScaled = true,
+                TextWrapped = true,
+        
+                [Fusion.Children] = {
+                scope:New "UIStroke" {
+                    Name = "UIStroke",
+                    Color = Color3.fromRGB(4, 45, 80),
+                    Thickness = 2.81,
+                },
+                }
+            },
+            scope:New "UIScale" {
+                Scale = scope:Tween(scope:Computed(function(use, _)
+                    if use(Hovering) == false then
+                        return 1
+                    elseif use(MouseDown) == false then
+                        return 1.25
+                    else
+                        return .75
+                    end
+                end), TweenInfo.new(.25, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut))
             }
-          },
-        }
+        },
+        [Fusion.OnEvent "MouseButton1Click"] = function()
+            Events.ToggleHUD:Fire()
+            Events.ToggleFrame:Fire(props.Frame)
+        end,
+        [Fusion.OnEvent "MouseEnter"] = function()
+            Hovering:set(true)
+        end,
+        [Fusion.OnEvent "MouseLeave"] = function()
+            Hovering:set(false)
+        end,
+        [Fusion.OnEvent "MouseButton1Down"] = function()
+           MouseDown:set(true)
+        end,
+        [Fusion.OnEvent "MouseButton1Up"] = function()
+            MouseDown:set(false)
+        end
       }
 end
 
