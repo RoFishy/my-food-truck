@@ -5,6 +5,8 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Packages = ReplicatedStorage:WaitForChild("Packages")
 local Fusion = require(Packages.Fusion)
 
+print("TEST COMMIT")
+
 -- // Types
 type UsedAs<T> = Fusion.UsedAs<T>
 
@@ -60,7 +62,7 @@ local function Daily(
             scope:New "UIAspectRatioConstraint" {
                 AspectRatio = 2.143
             },
-            ButtonTemplate(scope, {
+            ButtonTemplate(scope, { -- CLAIM REWARD BTN
                 Position = UDim2.fromScale(0.5, 0.988),
                 Name = "Claim",
                 Image = "rbxassetid://110980130953993",
@@ -97,6 +99,7 @@ local function Daily(
                             Size = UDim2.fromScale(0.187, 0.975),
                             Image = "rbxassetid://88831126214608",
                             Position = UDim2.fromScale(0, 0),
+                            BackgroundTransparency = 1,
 
                             [Fusion.Children] = {
                                 scope:New "UIAspectRatioConstraint" {
