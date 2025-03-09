@@ -28,9 +28,11 @@ function DataHandler.Start()
     Players.PlayerAdded:Connect(function(Player)
         DataHandler:_PlayerAdded(Player)
     end)
+
     Players.PlayerRemoving:Connect(function(Player)
         DataHandler:_PlayerRemoving(Player)
     end)
+
     for _, Player in Players:GetChildren() do
         task.spawn(function()
            DataHandler:_PlayerAdded(Player)
@@ -39,6 +41,10 @@ function DataHandler.Start()
 end
 
 function DataHandler:_PlayerAdded(Player)
+    if self.Profiles[Player] then
+        return
+    end
+
     local Profile = ProfileStore:LoadProfileAsync("Player_"..Player.UserId)
     if Profile ~= nil then
         Profile:AddUserId(Player.UserId)
