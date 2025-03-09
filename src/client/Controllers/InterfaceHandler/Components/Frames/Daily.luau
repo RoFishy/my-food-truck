@@ -17,26 +17,40 @@ local Close = require(Utils.Close)
 -- // data
 local Rewards = {
     ["Day 1"] = {
-        Reward = "250x Burger",
-        Image = "rbxassetid://122720055977995"
+        Reward = "10k Cash",
+        Image = "rbxassetid://108236665109310"
     },
     ["Day 2"] = {
-        Reward = "250x Burger",
-        Image = "rbxassetid://122720055977995"
+        Reward = "5 Min Customer Rush",
+        Image = "rbxassetid://132662618086409"
     },
     ["Day 3"] = {
-        Reward = "250x Burger",
-        Image = "rbxassetid://122720055977995"
+        Reward = "2x Money - 10 Min",
+        Image = "rbxassetid://133025540769989"
     },
     ["Day 4"] = {
-        Reward = "250x Burger",
-        Image = "rbxassetid://122720055977995"
+        Reward = "Random",
+        Image = "rbxassetid://89452357085356"
     },
     ["Day 5"] = {
-        Reward = "250x Burger",
-        Image = "rbxassetid://122720055977995"
+        Reward = "50K Cash",
+        Image = "rbxassetid://108236665109310"
+    },
+    ["Day 6"] = {
+        Reward = "VIP Customers 10 Min",
+        Image = "rbxassetid://132662618086409"
+    },
+    ["Day 7"] = {
+        Reward = "Mystery Block",
+        Image = "rbxassetid://93599131675708"
     }
 }
+
+-- // images
+local Checkmark = "rbxassetid://114644689485791"
+local ClaimedImage = "rbxassetid://112041574690047"
+local NextImage = "rbxassetid://88831126214608"
+local GreyImage = "rbxassetid://88831126214608"
 
 local function Daily(
     scope: Fusion.Scope,
@@ -75,14 +89,18 @@ local function Daily(
                     return -- add stuff later
                 end
             }),
-            scope:New "Frame" {
-                Name = "Frame",
+            scope:New "ScrollingFrame" {
+                Name = "ScrollingFrame",
                 BackgroundColor3 = Color3.fromRGB(255, 255, 255),
                 BackgroundTransparency = 1,
                 BorderColor3 = Color3.fromRGB(0, 0, 0),
                 BorderSizePixel = 0,
-                Position = UDim2.fromScale(0.0313, 0.367),
-                Size = UDim2.fromScale(0.942, 0.504),
+                Position = UDim2.fromScale(0.031, 0.345),
+                Size = UDim2.fromScale(0.942, 0.539),
+                CanvasSize = UDim2.fromScale(1.42, 0),
+                ScrollingDirection = "X",
+                ScrollBarThickness = 7,
+                VerticalScrollBarPosition = "Right",
 
                 [Fusion.Children] = {
                     scope:New "UIListLayout" {
